@@ -4,7 +4,7 @@ const bodyParser = require('koa-bodyparser');
 const AppRoutes = require('./src/routes');
 const catchError = require('./src/middleware/catchError');
 const app = new Koa();
-const router = new Router({ prefix: '/js' });
+const router = new Router({ prefix: '/get_sign_url' });
 app.use(catchError);
 
 // register all application routers
