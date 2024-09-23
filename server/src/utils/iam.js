@@ -1,5 +1,7 @@
 const axios = require('axios');
+require('dotenv').config();
 const IAM_ENDPOINT = "https://iam.myhuaweicloud.com";
+
 
 // https://support.huaweicloud.com/intl/zh-cn/api-iam/iam_30_0001.html
 const getIamToken = async () => {
@@ -15,16 +17,16 @@ const getIamToken = async () => {
                     "password": {
                         "user": {
                             "domain": {
-                                "name": "IAMDomain"        //IAM用户所属账号名
+                                "name": process.env.IAMDomain        //IAM用户所属账号名
                             },
-                            "name": "IAMUser",             //IAM用户名
-                            "password": "IAMPassword"      //IAM用户密码
+                            "name": process.env.IAMUser,             //IAM用户名
+                            "password": process.env.IAMPassword      //IAM用户密码
                         }
                     }
                 },
                 "scope": {
                     "domain": {
-                        "name": "IAMDomain"               //IAM用户所属账号名
+                        "name": process.env.IAMDomain               //IAM用户所属账号名
                     }
                 }
             }
