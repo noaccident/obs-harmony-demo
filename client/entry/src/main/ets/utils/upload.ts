@@ -9,9 +9,9 @@ const serverUrl = 'http://x.x.x.x:3000/get_sign_url'; // 获取签名URL的服�
  */
 export interface ISignUrlResult {
   /** 签名URL */
-  url: string;
-  /** content-type */
-  contentType?: string;
+  SignedUrl: string;
+  /** 签名计算头 */
+  ActualSignedRequestHeaders: object;
 }
 
 /**
@@ -41,8 +41,6 @@ const getSignUrl = async (fileName: string, req: {
         fileName,
         method: req.method,
         headers: req.headers,
-        queries: req.queries,
-        additionalHeaders: req.additionalHeaders
       },
       expectDataType: http.HttpDataType.OBJECT
     }, 200);
@@ -93,12 +91,9 @@ const putObject = async (fileUri: string): Promise<void> => {
 
   try {
     // 使用PutObject方法上传文件
-    await request(signUrlResult.url, {
+    await request(signUrlResult.SignedUrl, {
       method: http.RequestMethod.PUT,
-      header: {
-        'Content-Length': fileStat.size,
-        'Content-Type': signUrlResult.contentType
-      },
+      header: signUrlResult.ActualSignedRequestHeaders,
       extraData: data
     }, 200);
 
